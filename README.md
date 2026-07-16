@@ -1,2 +1,1 @@
-# finance-tracker
-Soon-to-be main pet-project
+FastAPI + Alembic + SQLAlchemy, etc.
