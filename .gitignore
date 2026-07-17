@@ -1,66 +1,33 @@
-# Environments
-.venv
-venv/
-env/
-ENV/
-
-# Python cache
+# Python
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
 *.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+build/
+dist/
 
-# Virtualenv
-pip-log.txt
-pip-delete-this-directory.txt
+# Виртуальное окружение
+.venv/
+venv/
 
-# IDE / Editors
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# uv
+# (сам .venv уже покрыт строкой выше; uv.lock и .python-version — НЕ игнорировать, см. ниже)
 
-# Testing
+# Секреты
+.env
+.env.*
+!.env.example
+
+# Тесты и линтеры — кэши
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
 .coverage
 htmlcov/
-.tox/
-.nox/
-.coverage.*
-.cache
 
-# Typing
-.mypy_cache/
-.dmypy.json
-dmypy.json
+# IDE
+.vscode/
+.idea/
 
-# Ruff / Linters
-.ruff_cache/
-
-# Logs
-*.log
-
-# OS
+# ОС
 .DS_Store
 Thumbs.db
