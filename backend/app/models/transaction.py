@@ -13,9 +13,11 @@ if TYPE_CHECKING:
     from app.models.category import Category
     from app.models.user import User
 
+
 class TransactionType(StrEnum):
     INCOME = "in"
     OUTCOME = "expense"
+
 
 class Transaction(Base):
     __tablename__ = "transactions"
@@ -25,14 +27,10 @@ class Transaction(Base):
     amount: Mapped[Decimal] = mapped_column(Numeric(10, 2), nullable=False)
 
     type: Mapped[TransactionType] = mapped_column(
-        SQLEnum(
-            TransactionType,
-            name="transaction_type_enum",
-            create_constraint=True
-        ),
+        SQLEnum(TransactionType, name="transaction_type_enum", create_constraint=True),
         nullable=False,
     )
-    
+
     created_at: Mapped[datetime] = mapped_column(
         server_default=func.now(), nullable=False
     )
