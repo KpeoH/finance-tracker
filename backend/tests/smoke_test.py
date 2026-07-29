@@ -19,10 +19,10 @@ async def run_smoke_test() -> None:
             await session.execute(
                 delete(Transaction).where(Transaction.name == "Test Purchase")
             )
-            await session.execute(delete(User).where(User.name == "Test User"))
             await session.execute(
                 delete(Category).where(Category.name == "Test Category")
             )
+            await session.execute(delete(User).where(User.name == "Test User"))
 
             await session.commit()
             print("\t1. Creating test user and category.\n")
@@ -30,7 +30,7 @@ async def run_smoke_test() -> None:
             test_user = User(
                 name="Test User", password_hash="abracadabra123", role="user"
             )
-            test_category = Category(name="Test Category")
+            test_category = Category(name="Test Category", user=test_user)
 
             session.add_all([test_user, test_category])
             await session.flush()
@@ -97,10 +97,10 @@ async def run_smoke_test() -> None:
             await session.execute(
                 delete(Transaction).where(Transaction.name == "Test Purchase")
             )
-            await session.execute(delete(User).where(User.name == "Test User"))
             await session.execute(
                 delete(Category).where(Category.name == "Test Category")
             )
+            await session.execute(delete(User).where(User.name == "Test User"))
             await session.commit()
 
             await engine.dispose()
