@@ -26,6 +26,7 @@ class TransactionRead(TransactionBase):
     user: UserRead
     category: CategoryRead
 
+
 class TransactionUpdate(BaseSchema):
     name: str | None = Field(None, max_length=100)
     amount: Decimal | None = Field(None, gt=0)
