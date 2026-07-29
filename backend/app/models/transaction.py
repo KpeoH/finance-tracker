@@ -3,8 +3,8 @@ from decimal import Decimal
 from enum import StrEnum
 from typing import TYPE_CHECKING
 
+from sqlalchemy import DateTime, ForeignKey, Numeric, String, func
 from sqlalchemy import Enum as SQLEnum
-from sqlalchemy import ForeignKey, Numeric, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Base
@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 
 
 class TransactionType(StrEnum):
-    INCOME = "in"
+    INCOME = "income"
     OUTCOME = "expense"
 
 
@@ -32,14 +32,14 @@ class Transaction(Base):
     )
 
     created_at: Mapped[datetime] = mapped_column(
-        server_default=func.now(), nullable=False
+        DateTime(timezone=True), server_default=func.now(), nullable=False
     )
 
     user_id: Mapped[int] = mapped_column(
-        ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
     )
     category_id: Mapped[int] = mapped_column(
-        ForeignKey("categories.id", ondelete="RESTRICT"), nullable=False
+        ForeignKey("categories.id", ondelete="RESTRICT"), nullable=False, index=True
     )
 
     user: Mapped["User"] = relationship()
