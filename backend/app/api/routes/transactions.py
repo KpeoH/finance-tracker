@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 
 from app.api.deps import CurrentUser, SessionDep
+from app.core.config import settings
 from app.schemas.transaction import (
     TransactionCreate,
     TransactionRead,
@@ -47,6 +48,14 @@ async def create_transaction(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Invalid category",
         )
+
+    if current_user.role == "test":
+        count = await TransactionService.count_by_user(session, current_user.id)
+        if count >= settings.TEST_USER_MAX_TRANSACTIONS:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Test user transaction limit reached",
+            )
 
     return await TransactionService.create(
         session,

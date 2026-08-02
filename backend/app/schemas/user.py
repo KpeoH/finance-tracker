@@ -11,6 +11,7 @@ class UserBase(BaseSchema):
 class UserRead(UserBase):
     id: int
 
+
 class UserShort(BaseSchema):
     id: int
     name: str
