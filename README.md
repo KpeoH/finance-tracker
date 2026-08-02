@@ -122,15 +122,6 @@ Finds the user with `role=test`, clears their categories/transactions, and seeds
 
 All category/transaction routes require a Bearer token and enforce ownership.
 
-## Screenshots (suggested)
-
-When you extend this README, useful shots are:
-
-1. Swagger UI (`/docs`) with authorized session  
-2. Example `GET /transactions` response (nested user + category)  
-3. `403` on test-user limit  
-4. (Later) dashboard / charts from the frontend  
-
 ## License
 
 MIT
