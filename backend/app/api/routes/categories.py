@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 
 from app.api.deps import CurrentUser, SessionDep
+from app.core.config import settings
 from app.schemas.category import CategoryCreate, CategoryRead, CategoryUpdate
 from app.services.category import CategoryService
 
@@ -47,6 +48,14 @@ async def create_category(
             status_code=status.HTTP_409_CONFLICT,
             detail="Category with this name already exists",
         )
+
+    if current_user.role == "test":
+        count = await CategoryService.count_by_user(session, current_user.id)
+        if count >= settings.TEST_USER_MAX_CATEGORIES:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Test user category limit reached",
+            )
 
     return await CategoryService.create(
         session,

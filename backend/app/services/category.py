@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.category import Category
@@ -26,6 +26,16 @@ class CategoryService:
         stmt = select(Category).where(Category.user_id == user_id).order_by(Category.id)
         result = await session.execute(stmt)
         return result.scalars().all()
+
+    @staticmethod
+    async def count_by_user(session: AsyncSession, user_id: int) -> int:
+        stmt = (
+            select(func.count())
+            .select_from(Category)
+            .where(Category.user_id == user_id)
+        )
+        result = await session.execute(stmt)
+        return result.scalar_one()
 
     @staticmethod
     async def create(session: AsyncSession, name: str, user_id: int) -> Category:
